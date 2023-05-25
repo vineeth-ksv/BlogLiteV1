@@ -1,0 +1,705 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Blog Lite Alpha
+  description: >
+    <div>Blog Lite application helps the users to connect their friends, family members etc. They can share the photos & videos with the people in your life.</div>
+    <br>
+    <div>It is the API for the blog lite application developed using Flask-RESTful and Flask-SQLAlchemy.</div>
+    
+    <h2>Database Schema</h2>
+    <h3>user Table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Unique, Not Null</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>String</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>String</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>mobile_number</td>
+                <td>Integer</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>updated_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>userposts table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>post_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("User.user_id")</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_img</td>
+                <td>Blob</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>img_filename</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+              <td>mimetype</td>
+              <td>String</td>
+              <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_name</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_caption</td>
+                <td>String</td>
+                <td>--</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>updated_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>isArchive</td>
+                <td>Integer</td>
+                <td>Not Null, Default 0</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>profilepics table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>profilepic_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("User.user_id")</td>
+            </tr>
+            <tr>
+                <td>profilepic_name</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>profilepic_data</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>mimetype</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>followers_list table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("User.user_id")</td>
+            </tr>
+            <tr>
+                <td>follower_id</td>
+                <td>Integer</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>following_list table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("User.user_id")</td>
+            </tr>
+            <tr>
+                <td>following_id</td>
+                <td>Integer</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+    <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>comment_id</td>
+            <td>Integer</td>
+            <td>Primary Key, Unique</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>Integer</td>
+            <td>Foreign Key ("User.user_id")</td>
+        </tr>
+        <tr>
+            <td>post_id</td>
+            <td>Integer</td>
+            <td>Foreign Key ("UserPosts.post_id")</td>
+        </tr>
+        <tr>
+            <td>text</td>
+            <td>String</td>
+            <td>Not Null</td>
+        </tr>
+        <tr>
+            <td>created_date</td>
+            <td>String</td>
+            <td>Not Null</td>
+        </tr>
+    </tbody>
+</table>
+    
+    <h2>Error Codes</h2>
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>user</td>
+          <td>BE1001</td>
+          <td>Email is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1002</td>
+          <td>Mobile Number is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1003</td>
+          <td>Full Name is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1004</td>
+          <td>Username is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1005</td>
+          <td>Password is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1006</td>
+          <td>Invalid Email.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1007</td>
+          <td>Invalid Mobile Number.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1008</td>
+          <td>Password must have 8-16 characters, a capital letter, small letter, number & special character[!@#$%_].</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1009</td>
+          <td>User already exists.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1010</td>
+          <td>Duplicate Email.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1011</td>
+          <td>Duplicate Mobile Number.</td>
+        </tr>
+      </tbody>
+    </table>
+    
+     
+  contact:
+    email: 20f1002775@student.onlinedegree.iitm.ac.in
+tags:
+  - name: User
+    description: User profile
+  - name: Blog
+    description: Blog/Post uploaded by user
+  - name: Userblogs
+    description: All blogs uploaded by user
+servers: 
+   - url: http://127.0.0.1:5555/
+#    - url: http://127.0.0.1:5555
+paths:
+  /api/user:
+    get:
+      tags:
+        - User
+      summary: get user data
+      description: Operation to get user data
+      operationId: getUserData
+      parameters:
+        - name: username
+          in: query
+          description: Enter username
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Enter password
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+                  no_of_posts:
+                    type: integer
+                  followers:
+                    type: integer
+                  following:
+                    type: integer
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "410":
+          description: Invalid Password.
+        "500":
+          description: Internal server error
+    
+    post:
+      tags:
+        - User
+      summary: create/register a new user
+      description: Operation to create/register new user
+      operationId: postUserData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                   type: string
+                   example: example@gmail.com
+                mobile_number:
+                   type: integer
+                   example: 1234567980
+                full_name:
+                  type: string
+                  example: example
+                username:
+                  type: string
+                  example: example_123
+                password:
+                  type: string
+                  example: example_password
+      responses:
+        "201":
+          description: successful operation
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   user_id:
+#                     type: integer
+#                   username:
+#                     type: string
+#                   fullname:
+#                     type: string
+#                   email:
+#                     type: string
+#                   mobile_number:
+#                     type: integer
+        "500":
+           description: Internal Server error
+   
+  /api/user/{username}:
+    description: End point to read a user resource with username
+    put:
+      tags:
+        - User
+      summary: edit the user details
+      description: Operation to edit user/profile details
+      operationId: putUserData
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                   type: string
+                mobile_number:
+                   type: integer
+                full_name:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+        "404":
+          description: User not found
+        "500":
+          description: Internal server error.
+    
+    delete:
+      tags:
+        - User
+      summary: delete a user/profile
+      description: Operation to delete user/profile
+      operationId: deleteUserData
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   username:
+#                     type: string
+        "404":
+          description: User not found
+        "500":
+           description: Internal server error
+           
+  /api/blog/{post_id}:         
+    get:
+      tags:
+        - Blog
+      summary: gets blog data
+      description: Operation to retrieve blog data
+      operationId: getBlogData
+      parameters:
+        - name: post_id
+          in: path
+          description: Enter post_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  blog_id:
+                    type: integer
+                  blog_name:
+                    type: string
+                  blog_caption:
+                    type: string
+                  is_archive:
+                    type: boolean
+        "400":
+          description: Bad request.
+        "404":
+          description: Blog not found.
+        "500":
+          description: Internal server error
+          
+    delete:
+      tags:
+        - Blog
+      summary: delete a blog
+      description: Operation to delete a blog from user profile
+      operationId: deleteBlog
+      parameters:
+        - name: post_id
+          in: path
+          description: Enter post_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: Blog not found
+        "500":
+           description: Internal server error
+    
+    put:
+      tags:
+        - Blog
+      summary: edit the blog.
+      description: Operation to edit a blog.
+      operationId: putBlog
+      parameters:
+        - name: post_id
+          in: path
+          description: Enter post_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blog_name:
+                    type: string
+                blog_caption:
+                    type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  blog_id:
+                    type: integer
+                  blog_name:
+                    type: string
+                  blog_caption:
+                    type: string
+                  is_archive:
+                    type: boolean
+        "404":
+          description: Blog not found
+        "500":
+          description: Internal server error.
+    
+  /api/blog/{username}/addpost:
+    post:
+      tags:
+        - Blog
+      summary: uploads an image
+      description: Operation to create and upload a blog to user profile
+      operationId: createBlog
+      parameters:
+        - name: username
+          in: path
+          description: username to upload a blog
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blog_name:
+                  type: string
+                  example: myblog
+                blog_caption:
+                  type: string
+                  example: my caption/description of the blog
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                  blog_name:
+                    type: string
+                    example: myblog
+                  blog_caption:
+                    type: string
+                    example: my caption/description of the blog
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+           description: Internal server error
+
+  /api/userblogs/{username}:
+    get:
+      tags:
+        - Userblogs
+      summary: gets all blogs data of user
+      description: Operation to retrieve all blogs of a user
+      operationId: getBlogsByUser
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  blog_id:
+                    type: integer
+                  blog_name:
+                    type: string
+                  blog_caption:
+                    type: string
+                  is_archive:
+                    type: boolean
+        "400":
+          description: No Blogs exist for user.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error

@@ -1,0 +1,31 @@
+{% extends "base.html" -%}
+
+{% block head -%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}"/>
+{% endblock %}
+
+{% block title %}
+    <title>Blog Lite | My Archived posts</title>
+{% endblock %}
+
+{% block content -%}
+
+{% if myarchivedposts|length %}
+<div class="nesting-all-posts-container">
+    <div class="all-posts-container">
+        {% for post in myarchivedposts %}
+        <div class="posts-container">
+            <a href="{{ url_for('view_post', username = username, post_id = post.post_id) }}"><img src="{{ url_for('renderimage', image_id=post.post_id) }}" class="post-images"/></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="no-posts">
+<center>
+    <h5>There are no posts in archive.</h5>
+</center>
+</div>
+{% endif %}
+
+{% endblock %}

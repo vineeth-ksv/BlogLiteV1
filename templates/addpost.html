@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block head -%}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='add_edit_post.css') }}"/>
+{% endblock -%}
+
+{% block title -%}
+    <title>Blog Lite | Add Post</title>
+{% endblock -%}
+
+{% block jsscript -%}
+    <script language="javascript" type="text/javascript">
+            $(function () {
+            $("#postImage").change(function () {
+                $("#image-preview").html("");
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png|)$/;
+                if (regex.test($(this).val().toLowerCase())) {
+                    if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                        $("#no-image-selected").hide();
+                        $("#image-preview").show();
+                        $("#image-preview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+                    }
+                    else {
+                        if (typeof (FileReader) != "undefined") {
+                            $("#no-image-selected").hide();
+                            $("#image-preview").show();
+                            $("#image-preview").append("<img height='200px' width='200px'/>");
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("#image-preview img").attr("src", e.target.result);
+                            }
+                            reader.readAsDataURL($(this)[0].files[0]);
+                        } else {
+                            alert("This browser does not support FileReader.");
+                        }
+                    }
+                } else {
+                    alert("Please upload a valid image file.");
+                }
+            });
+        });
+    </script>
+{% endblock -%}
+
+{% block content -%}
+    <div class="d-flex justify-content-center">
+        <div class="addpost-title">
+            <h3>Update a Blog / Post</h3>
+        </div>
+    </div>
+
+    <div class="addpost-container d-flex justify-content-center">
+        <div>
+            <form action="{{ url_for('addpost', username = username) }}" method="POST" class="addpostform" enctype=multipart/form-data> 
+                <div class="row mb-3">
+                    <label for="postName" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                    <input type="text" class="form-control" id="postName" name="postname" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="postCaption" class="col-sm-2 col-form-label">Caption / Description</label>
+                    <div class="col-sm-9">
+                        <textarea rows="4" cols="50" class="form-control" id="postCaption" name="postcaption"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="postImage" class="col-sm-2 col-form-label">Upload Image</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="file" id="postImage" name="postimage" required>
+                    </div>
+                </div>
+                <div class="row mb-3 submit-btn">
+                    <div class="col-sm-1">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <center><p>Image Preview</p></center>
+            <img src="{{ url_for('static', filename='images/no-image-selected.jpg') }}" id="no-image-selected">
+            <div id="image-preview"></div>
+        </div>
+    </div>
+
+{% endblock -%}

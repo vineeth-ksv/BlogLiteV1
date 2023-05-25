@@ -1,0 +1,71 @@
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.followers-heading-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 50px 0px;
+}
+
+.your-followers-heading {
+    font-size: 25px;
+}
+
+#followers-list-container{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.user-list-user-name {
+    font-size: 20px;
+}
+
+.list-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.unfollow-button {
+    color: #ffffff;
+    height: 28px;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f71e33;
+}
+
+.follow-button {
+    color: #ffffff;
+    height: 28px;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4b23eb;
+}
+
+.remove-button {
+    color: #ffffff;
+    height: 28px;
+    width: 75px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f71e33;
+}
+
+.disabled-remove-button {
+    color: #ffffff;
+    height: 28px;
+    width: 85px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8f8d8e;
+}
+
+.empty-list{
+    color: gray;
+}

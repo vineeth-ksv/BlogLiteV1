@@ -1,0 +1,270 @@
+main{
+    margin: 30px 200px;
+}
+.h3-username{
+    margin: 0px 20px 0px 0px;
+}
+.profileImage{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* .post-container{
+    margin: 25px 5px 25px 5px;
+    cursor: pointer;
+}
+.userpost{
+    width: 325px;
+    height: 325px;
+} */
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.nesting-all-posts-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-posts-container {
+    width: 1100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.posts-container {
+    margin-top: 30px;
+    margin-right: 10px;
+}
+
+.post-images {
+    height: 325px;
+    width: 325px;
+}
+
+.no-posts{
+    margin-top: 100px;
+    color: gray;
+}
+
+.no-posts a{
+    text-decoration: none;
+}
+
+
+.dropbtn {
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropbtn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 140px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: #ddd;}
+  
+  .show {display: block;}
+
+/* edit_profile.html css properties */
+
+.profilepic{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+.profileusername{
+  margin: 0px 0px 0px 20px;
+}
+.editprofilepic-container{
+  margin: 10px 0px 0px 490px;
+}
+/* .upload-btn{
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 10px;
+} */
+
+.updateprofilepic, .uploadprofilepic {
+    position: relative;
+    color: blue;
+    text-decoration: none;
+}
+  
+.updateprofilepic:hover, .uploadprofilepic:hover {
+    color: blue;
+}
+  
+.updateprofilepic::before, .uploadprofilepic::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    bottom: 0;
+    left: 0;
+    background-color: blue;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+  
+.updateprofilepic:hover::before, .uploadprofilepic:hover::before {
+    transform: scaleX(1);
+}
+
+.removeprofilepic {
+    position: relative;
+    color: red;
+    text-decoration: none;
+}
+  
+.removeprofilepic:hover {
+    color: red;
+}
+  
+.removeprofilepic::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    bottom: 0;
+    left: 0;
+    background-color: red;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+  
+.removeprofilepic:hover::before {
+    transform: scaleX(1);
+}
+
+.userdata{
+  margin: 20px 0px 0px 0px;
+}
+
+
+/* view_post.html css properties */
+
+.buttons-container{
+    display: flex;
+    justify-content: space-between;
+    width: 680px;
+    margin-top: 50px;
+    margin-left: 220px;
+  }
+  
+  .post-container{
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 700px;
+  }
+
+  .card-caption-scroll{
+    max-height: 80px;
+    overflow-y: auto;
+    scrollbar-width: 1px;
+
+}
+
+.comment_scroll {
+    max-height: 80px;
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+/* view_profile.html css properties */
+
+.nesting-all-temp-posts-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-temp-posts-container {
+    width: 1100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.temp-posts-container {
+    width: 335px;
+    max-height: 530px;
+    margin: 30px 15px;
+}
+
+.post-cards {
+    max-width: 300px;
+    max-height: 250px;
+}
+
+.no-posts, .not-following{
+    margin-top: 100px;
+    color: gray;
+}
+
+.card-caption-scroll{
+    max-height: 80px;
+    overflow-y: auto;
+    scrollbar-width: 1px;
+
+}
+
+.comment_scroll {
+    max-height: 80px;
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}

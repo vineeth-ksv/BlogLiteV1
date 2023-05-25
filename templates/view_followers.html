@@ -1,0 +1,41 @@
+{% extends "base.html" -%}
+
+{% block head -%}
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='followers-following.css') }}"/>
+{% endblock -%}
+
+{% block title -%}
+    <title>Blog Lite | My Followers</title>
+{% endblock -%}
+
+{% block jsscript -%}
+
+{% endblock -%}
+
+{% block content -%} 
+    <div class="followers-heading-container">
+        <h1 class="your-followers-heading">Your Followers</h1>
+    </div>
+    {% if followers_list|length %}
+        <div id="followers-list-container">
+            <ul>
+                {% for i in range(followers_list|length) -%}
+                    <li class="list-items">
+                        <p class="user-list-user-name">
+                            {{ i+1 }}. 
+                            <a href="{{ url_for('view_profile', temp_username = followers_list[i].username) }}">{{ followers_list[i].username }}</a>
+                        </p>
+                        <div>
+                            <a href="{{ url_for('remove_follower', username = username, remove_id = followers_list[i].user_id) }}"><button class="remove-button">Remove</button></a>
+                        </div>
+                    </li>
+                {% endfor -%}
+            </ul>
+        </div>
+    {% else %}
+        <div class="empty-list">
+            <center><h5>Your Follower's list is empty ...</h5></center>
+        </div>
+    {% endif %}
+{% endblock -%}

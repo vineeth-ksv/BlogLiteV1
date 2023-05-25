@@ -1,0 +1,32 @@
+<style>
+.view_profile{
+    text-decoration: none;
+    color: black;
+}
+</style>
+
+
+
+{% if users|count %}
+    <table class="table table-hover">
+        <tbody>
+            {% for i in range(users|length) %}  
+                <tr style="font-weight: 500;">
+                    <td>{{ i+1 }}.</td>
+                    <td><a href="{{ url_for('view_profile', temp_username = users[i].username) }}" class="view_profile">{{ users[i].username }}</a></td>
+                    {% if users[i].username != session['user'] %}
+                        {% if users[i].user_id in following %}
+                            <td><a href="{{ url_for('unfollow_user', username = session['user'], unfollow_id = users[i].user_id) }}" class="btn btn-secondary btn-sm">Unfollow</a></td>
+                        {% else %}
+                            <td><a href="{{ url_for('follow_user', username = session['user'], follow_id = users[i].user_id) }}" class="btn btn-primary btn-sm">Follow</a></td>
+                        {% endif %}
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+{% else %}
+    <center><h5>No data found.</h5></center>
+{% endif %}

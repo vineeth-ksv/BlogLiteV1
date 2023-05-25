@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block head -%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}"/>
+{% endblock -%}
+
+{% block title -%}
+    <title>Blog Lite | Home</title>
+{% endblock -%}
+
+{% block jsscript -%}
+
+{% endblock -%}
+
+{% block content -%} 
+    {% if feed -%}
+        <div class="nesting-all-posts-container">
+            <div class="all-posts-container">
+                {% for post in feed %}
+                <div class="posts-container">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h6 class="card-title"><a href="{{ url_for('view_profile', temp_username = post.username) }}">{{ post.username }}</a></h6>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <img src="{{ url_for('renderimage', image_id=post.post_id) }}" class="card-img-top feed-post-image" alt="...">
+                        </div>
+                        
+                        <div class="card-body">
+                            <h6>{{ post.post_name }}</h6>
+                            <p class="card-text card-caption-scroll">{{ post.post_caption }}</p>
+                            <div class="collapse" id="comments-{{post.post_id}}">
+                                <div class="card">
+                                    <div class="card-body comment_scroll" id="comments-expanded-{{post.post_id}}">
+                                        {% for comment in post.comments -%}
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="{{ url_for('view_profile', temp_username = comment.user.username) }}">{{ comment.user.username }}</a>: {{ comment.text }}
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">{{ comment.created_date }}</small>
+                                            </div>
+                                        </div>
+                                        {% endfor -%}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                {% if post.comments|length > 0 -%}
+                                <a data-bs-toggle="collapse" href="#comments-{{post.post_id}}" role="button">
+                                    <small>View {{ post.comments|length }} Comments</small>
+                                </a>
+                                {% else -%}
+                                <small class="text-muted">No Comments</small>
+                                {% endif %}
+                            </p>
+                            <form class="input-group mb-3" method="post" action="{{ url_for('add_comment', username = session['user'], post_id = post.post_id) }}">
+                                <input type="text" name="comment" id="comment" class="form-control" placeholder="Comment something!"/>
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">Comment</button>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{ post.updated_date[0:16] }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- <div class="posts-container">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="card-title">Card title</h5>
+                        </div>
+                        <img src="https://cdn.pixabay.com/photo/2016/12/03/11/47/car-1879630__340.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">This is a short card.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    {% else -%}
+    <div class="empty-feed">
+        <center>
+            <h3>There are no posts in your feed.</h3>
+            <h3>Connect with other users to see what they are posting.</h3>
+        </center>
+    </div>
+    {% endif -%}
+{% endblock -%}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/signup_validations.js')}}" async type="text/javascript"></script>
+    <title>Sign Up | Clone</title>
+</head>
+<body>
+    <main>
+      {% block flashing_content -%}
+        {% with messages = get_flashed_messages(with_categories=true) -%}
+          {% if messages -%}
+            {% for category, message in messages -%}
+            <script>
+                Swal.fire({
+                  icon: '{{ category }}',
+                  text: '{{ message }}'
+                });
+            </script>
+            {% endfor -%}
+          {% endif -%}
+        {% endwith -%}
+      {% endblock -%}
+        <div class="page">
+            <div class="header">
+                <div class="heading">
+                  <h1>𝔅𝔩𝔬𝔤 𝔏𝔦𝔱𝔢</h1>
+                </div>
+              <p>Sign up to see photos and videos from your friends.</p>
+              <hr>
+            </div>
+            <div class="container">
+              <form action="{{ url_for('signup') }}" id="signUpForm" method="post" onsubmit="return validateForm()">
+
+                  <input onblur="triggerOnBlur('email','mailPrompt')" onfocus="triggerOnFocus('mailPrompt')" type="email" 
+                          class="form-control" id="email" name="email" placeholder="E-mail" required value="{{ formdata['email'] if formdata }}">
+                  <p id="mailPrompt" class="prompt"></p>
+                
+                  <input onblur="triggerOnBlur('mobile_number','mobileNumberPrompt')" onfocus="triggerOnFocus('mobileNumberPrompt')" type="text" 
+                          class="form-control" id="mobile_number" name="mobile_number" placeholder="Mobile Number" required value="{{ formdata['mobile_number'] if formdata }}">
+                  <p id="mobileNumberPrompt" class="prompt"></p>
+                
+                  <input onblur="triggerOnBlur('name','namePrompt')" onfocus="triggerOnFocus('namePrompt')" type="text" 
+                          class="form-control" id="name" name="name" placeholder="Full Name" required value="{{ formdata['name'] if formdata }}">
+                  <p id="namePrompt" class="prompt"></p>
+                
+                  <input onblur="triggerOnBlur('username_in_signup','userNamePrompt')" onfocus="triggerOnFocus('userNamePrompt')" type="text" 
+                          class="form-control" id="username_in_signup" name="username" placeholder="Username" required value="{{ formdata['username'] if formdata }}">
+                  <p id="userNamePrompt" class="prompt"></p>
+                
+                  <input onblur="triggerOnBlur('passwordInSignUp','passwordPrompt')" onfocus="triggerOnFocus('passwordPrompt')" type="password" 
+                          class="form-control" id="passwordInSignUp" name="password" placeholder="Password" required>
+                  <p id="passwordPrompt" class="prompt"></p>
+                
+                  <input onblur="triggerOnBlur('conifrm_password_in_signup','confirmPasswordPrompt')" onfocus="triggerOnFocus('confirmPasswordPrompt')" type="password" 
+                          class="form-control" id="conifrm_password_in_signup" name="confirm_password" placeholder="Confirm Password" required>
+                  <p id="confirmPasswordPrompt" class="prompt"></p>
+                
+                  <input type="submit" value="Sign up">
+              </form>
+              <ul>
+                <li>By signing up, you agree to our</li>
+                <li><a href="">Terms</a></li>
+                <li><a href="">Data Policy</a></li>
+                <li>and</li>
+                <li><a href="">Cookies Policy</a> .</li>
+             </ul>
+            </div>
+        </div>
+        <div class="option">
+           <p>Have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+        </div>
+        <div class="footer">
+          <p>© 2023 Blog Lite</p>
+        </div>
+      </main>
+</body>
+</html>

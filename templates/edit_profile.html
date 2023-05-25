@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}"/>
+{% endblock %}
+
+{% block title %}
+    <title>Blog Lite | Edit Profile</title>
+{% endblock %}
+
+{% block jsscript %}
+<script>
+    $(function(){
+        $("#upload_link").on('click', function(e){
+            e.preventDefault();
+            $("#upload:hidden").trigger('click');
+        });
+    });
+    $(function(){
+        $("#update_link").on('click', function(e){
+            e.preventDefault();
+            $("#upload:hidden").trigger('click');
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div>
+    <div class="profilepic-container d-flex align-items-center justify-content-center">
+    {% if default_profilepic -%}
+        <img src="{{ url_for('static', filename='images/blank-profile-picture.png') }}" class="profilepic" />
+    {% else -%}
+        <img src="{{ url_for('renderprofilepic', username = username) }}" class="profilepic" />
+    {% endif %}
+    <div class="profileusername">
+        <h5>{{ username }}</h5>
+    </div>
+</div>
+<div class="editprofilepic-container">
+    {% if default_profilepic -%}
+        <form action="{{ url_for('uploadprofilepic', username = username) }}" method="post" enctype=multipart/form-data>
+            <input id="upload" type="file" accept="image/png, image/jpeg" name="uploadedprofilepic" onchange="form.submit()" style="display: none;"/>
+            <a href="#" class="uploadprofilepic" id="upload_link">Upload profile photo</a>
+        </form>
+    {% else -%}
+        <form action="{{ url_for('updateprofilepic', username = username) }}" method="POST" enctype="multipart/form-data">
+            <input id="upload" type="file" accept="image/png, image/jpeg" name="uploadedprofilepic" onchange="form.submit()" style="display: none;"/>
+            <a href="#" class="updateprofilepic" id="update_link">Update profile photo</a><br>
+        </form>
+        <a href="{{ url_for('deleteprofilepic', username = username) }}" class="removeprofilepic">Remove profile photo</a><br>
+    {% endif %}
+</div>
+<div class="userdata">
+    <form action="{{ url_for('edit_profile', username = username) }}" method="post" enctype=multipart/form-data class="userdataform">
+        <div class="mb-3">
+          <label for="Name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="Name" name="name" value="{{ user.name }}">
+        </div>
+        <div class="mb-3">
+            <label for="Username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="Username" name="username" value="{{ user.username }}" readonly>
+        </div>
+        <!-- <div class="mb-3">
+            <label for="Bio" class="form-label">Bio</label>
+            <textarea name="Bio" id="" cols="30" rows="10" class="form-control" id="Bio"></textarea>
+          </div> -->
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="Email" name="email" value="{{ user.email }}">
+        </div>
+        <div class="mb-3">
+            <label for="phonenumber" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phonenumber" name="mobile_number" value="{{ user.mobile_number }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+</form>
+</div>
+</div>
+
+
+
+{% endblock %}

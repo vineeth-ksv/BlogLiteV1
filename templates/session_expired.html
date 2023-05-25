@@ -1,0 +1,38 @@
+{% extends "base.html" -%}
+
+{% block head -%} 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock -%}
+
+{% block title %}
+    <title>Blog Lite | Session Expired</title>
+{% endblock %}
+
+{% block jsscript %}
+{% endblock -%}
+    
+{% block content -%}
+<script>
+    window.onload = function(){
+        console.log('test');
+        let timerInterval
+        Swal.fire({
+        title: 'Session Expired!',
+        html: 'Redirecting to Home Page..',
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: () => {
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+            }, 100)
+        },
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
+        }).then((result) => {
+            window.location = "{{ url_for('index') }}" ;
+        })
+    }
+</script>
+{% endblock %}

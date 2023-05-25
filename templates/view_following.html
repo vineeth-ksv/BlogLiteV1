@@ -1,0 +1,56 @@
+{% extends "base.html" -%}
+
+{% block head -%}
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='followers-following.css') }}"/>
+{% endblock -%}
+
+{% block title -%}
+    <title>Blog Lite | My Following</title>
+{% endblock -%}
+
+{% block jsscript -%}
+    <script>
+        function toggleUnfollow(id) {
+            var unfollowButton = document.getElementById(id);
+            if (unfollowButton.textContent === "Unfollow") {
+                unfollowButton.textContent = "Follow";
+                unfollowButton.classList.remove("unfollow-button");
+                unfollowButton.classList.add("follow-button");
+            } else {
+                unfollowButton.textContent = "Unfollow";
+                unfollowButton.classList.remove("follow-button");
+                unfollowButton.classList.add("unfollow-button");
+
+            }
+        }
+    </script>
+{% endblock -%}
+
+{% block content -%}
+    <div class="followers-heading-container">
+        <h1 class="your-followers-heading">People you follow</h1>
+    </div>
+
+    {% if following_list|length %}
+        <div id="followers-list-container">
+            <ul>
+                {% for i in range(following_list|length) %}
+                    <li class="list-items">
+                        <p class="user-list-user-name">
+                            {{i+1}}. 
+                            <a href="{{ url_for('view_profile', temp_username = following_list[i].username) }}">{{ following_list[i].username }}</a>
+                        </p>
+                        <div>
+                            <a href="{{ url_for('unfollow_user', username = username, unfollow_id = following_list[i].user_id) }}"><button class="unfollow-button">Unfollow</button></a>
+                        </div>
+                    </li>
+                {% endfor -%}
+            </ul>
+        </div>
+    {% else %}
+    <div class="empty-list">
+        <center><h5>Your Following list is empty ...</h5></center>
+    </div>
+    {% endif %}
+{% endblock -%}

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block head -%}
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}"/>
+{% endblock -%}
+
+{% block title -%}
+    <title>Blog Lite | {{ temp_user.username }}</title>
+{% endblock -%}
+
+{% block jsscript -%}
+
+{% endblock -%}
+
+{% block content -%}
+ <div class="profile-container d-flex align-items-center justify-content-center">
+    {% if default_profilepic -%}
+        <img src="{{ url_for('static', filename='images/blank-profile-picture.png') }}" class="profileImage" id="profileImage" />
+    {% else -%}
+        <img src="{{ url_for('renderprofilepic', username = temp_user.username) }}" class="profileImage" id="profileImage" />
+    {% endif %}
+    <div>
+        <div class="d-flex flex-row">
+            <h3 class="ms-5 h3-username">{{ temp_user.username }}</h3>
+        </div>
+        <div class="d-flex mt-4">
+            <h6 class="ms-5"><b>{{ temp_posts|length }}</b> Posts</h6>
+            <h6 class="ms-5"><b>{{ temp_followers_count }}</b> Followers</h6>
+            <h6 class="ms-5"><b>{{ temp_following_count }}</b> Following</h6>
+        </div>
+        <div class="follow-unfollow-btns">
+            {% if not following -%}
+                <a class="btn btn-primary btn-sm ms-5" href="{{ url_for('follow_user', username = username, follow_id = temp_user.user_id) }}">Follow</a>
+            {% else -%}
+                <a class="btn btn-primary btn-sm ms-5" href="{{ url_for('unfollow_user', username  = username, unfollow_id = temp_user.user_id) }}">Unfollow</a>
+            {% endif -%}
+        </div>
+    </div>
+</div>
+    <center><hr></center>
+    {% if following %}
+        {% if temp_posts|length %}
+        <div class="nesting-all-temp-posts-container">
+            <div class="all-temp-posts-container">
+                {% for post in temp_posts %}
+                <div class="temp-posts-container">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h6 class="card-title">{{ post.username }}</a></h6>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <img src="{{ url_for('renderimage', image_id=post.post_id) }}" class="card-img-top post-cards" alt="...">
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5>{{ post.post_name }}</h5>
+                            <p class="card-text card-caption-scroll">{{ post.post_caption }}</p>
+                            <div class="collapse" id="comments-{{post.post_id}}">
+                                <div class="card">
+                                    <div class="card-body comment_scroll" id="comments-expanded-{{post.post_id}}">
+                                        {% for comment in post.comments -%}
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="{{ url_for('view_profile', temp_username = comment.user.username) }}">{{ post.username }}</a>: {{ comment.text }}
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">{{ comment.created_date }}</small>
+                                            </div>
+                                        </div>
+                                        {% endfor -%}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                {% if post.comments|length > 0 -%}
+                                <a data-bs-toggle="collapse" href="#comments-{{post.post_id}}" role="button">
+                                    <small>View {{ post.comments|length }} Comments</small>
+                                </a>
+                                {% else -%}
+                                <small class="text-muted">No Comments</small>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{ post.updated_date[0:16] }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="no-posts">
+            <center>
+                <img src="https://icon-library.com/images/photo-icon-png/photo-icon-png-1.jpg" width="70px" height="70px">
+                <h5>No Posts Yet.</h5>
+            </center>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="not-following">
+            <center>
+                <img src="https://thumbs.dreamstime.com/b/safety-password-lock-security-symbol-protection-privacy-icon-business-sign-web-internet-concept-secure-padlock-access-computer-159851851.jpg" width="100px" height="100px">
+                <h5>Follow this account to see their photos and videos.</h5>
+            </center>
+        </div>
+    {% endif %}
+{% endblock %}
