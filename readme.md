@@ -26,11 +26,14 @@
 
 ```
 ├── application
-│   ├── config.py
-│   ├── controllers.py
-│   ├── database.py
-│   ├── __init__.py
-│   ├── models.py
+│   ├── api.py
+|   ├── config.py
+|   ├── controllers.py
+|   ├── database.py
+|   ├── models.py
+|   ├── myfunctions.py
+|   ├── validation.py
+|   ├── __init__.py
 │   └── __pycache__
 │       ├── config.cpython-36.pyc
 │       ├── config.cpython-37.pyc
@@ -43,7 +46,7 @@
 │       ├── models.cpython-36.pyc
 │       └── models.cpython-37.pyc
 ├── db_directory
-│   └── test.db
+│   └── bloglitedb.sqlite3
 ├── local_run.sh
 ├── local_setup.sh
 ├── main.py
@@ -85,21 +88,51 @@
 │   │   │   ├── bootstrap-utilities.rtl.css.map
 │   │   │   ├── bootstrap-utilities.rtl.min.css
 │   │   │   └── bootstrap-utilities.rtl.min.css.map
-│   │   └── js
-│   │       ├── bootstrap.bundle.js
-│   │       ├── bootstrap.bundle.js.map
-│   │       ├── bootstrap.bundle.min.js
-│   │       ├── bootstrap.bundle.min.js.map
-│   │       ├── bootstrap.esm.js
-│   │       ├── bootstrap.esm.js.map
-│   │       ├── bootstrap.esm.min.js
-│   │       ├── bootstrap.esm.min.js.map
-│   │       ├── bootstrap.js
-│   │       ├── bootstrap.js.map
-│   │       ├── bootstrap.min.js
-│   │       └── bootstrap.min.js.map
-│   └── style.css
+│   │   ├── js
+│   │   │   ├── bootstrap.bundle.js
+│   │   │   ├── bootstrap.bundle.js.map
+│   │   │   ├── bootstrap.bundle.min.js
+│   │   │   ├── bootstrap.bundle.min.js.map
+│   │   │   ├── bootstrap.esm.js
+│   │   │   ├── bootstrap.esm.js.map
+│   │   │   ├── bootstrap.esm.min.js
+│   │   │   ├── bootstrap.esm.min.js.map
+│   │   │   ├── bootstrap.js
+│   │   │   ├── bootstrap.js.map
+│   │   │   ├── bootstrap.min.js
+│   │   |   ├── bootstrap.min.js.map
+│   │   │   ├── signup_validations.js
+│   │   │   └── custom_validations.js
+│   │   └── images
+│   │       ├── blank-profile-picture.png
+│   │       ├── blogliteimg.png
+│   │       ├── no-image-selected.jpg
+│   ├── style.css
+│   ├── add_edit_post.css
+|   ├── followers-following.css
+|   ├── header.css
+|   ├── home.css
+|   ├── profile.css
+|   ├── search.css
+|   ├── signup.css
+|   ├── style.css
 └── templates
-    ├── contact.html
-    └── index.html
+    ├── addpost.html
+    ├── archived_posts.html
+    ├── base.html
+    ├── edit_post.html
+    ├── edit_profile.html
+    ├── error.html
+    ├── home.html
+    ├── index.html
+    ├── profile.html
+    ├── search.html
+    ├── search_response.html
+    ├── session_expired.html
+    ├── signup.html
+    ├── test.html
+    ├── view_followers.html
+    ├── view_following.html
+    ├── view_post.html
+    └── view_profile.html
 ```
